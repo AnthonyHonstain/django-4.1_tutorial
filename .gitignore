@@ -1,0 +1,4 @@
+.my_pgpass
+.idea
+*.iml
+*.pyc
