@@ -1,3 +1,5 @@
+import asyncio
+
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.template import loader
@@ -17,12 +19,20 @@ from .models import Question, Choice
 #     }
 #     return render(request, 'polls/index.html', context)
 
-# def detail(request, question_id):
-#     try:
-#         question = Question.objects.get(pk=question_id)
-#     except Question.DoesNotExist:
-#         raise Http404("Question does not exist")
-#     return render(request, 'polls/detail.html', {'question': question})
+async def detail(request, question_id):
+    try:
+        question = await Question.objects.filter(pub_date__lte=timezone.now()).aget(pk=question_id)
+        choices = []
+        async for choice in Choice.objects.select_related('question').filter(
+                question_id=question_id, question__pub_date__lte=timezone.now()
+        ).all():
+            await asyncio.sleep(1)
+            choices.append(choice)
+        print('foo')
+
+    except Question.DoesNotExist:
+        raise Http404("Question does not exist")
+    return render(request, 'polls/detail.html', {'question': question, 'choices': choices })
 
 
 # def results(request, question_id):
@@ -38,7 +48,7 @@ class IndexView(generic.ListView):
         """Return the last five published questions."""
         return Question.objects.filter(
             pub_date__lte=timezone.now()
-        ).order_by('-pub_date')[:5]
+        ).order_by('-pub_date')[:25]
 
 
 class DetailView(generic.DetailView):
@@ -48,6 +58,13 @@ class DetailView(generic.DetailView):
     def get_queryset(self):
         """Exclude un-published questions"""
         return Question.objects.filter(pub_date__lte=timezone.now())
+
+    def get_context_data(self, **kwargs):
+        data = super().get_context_data(**kwargs)
+        data['choices'] = Choice.objects.select_related('question').filter(
+            question_id=data['question'].id, question__pub_date__lte=timezone.now()
+        ).all()
+        return data
 
 
 class ResultsView(generic.DetailView):
