@@ -10,6 +10,12 @@ This Django project is just an implementation of the Django tutorial https://doc
 * Gunicorn 20.1.0
 * Uvicorn 0.20.0
 
+# Running Locally
+You will need to create a `.my_pgpass` file with the following:
+```text
+localhost:5432:<your-database-name>:<insert-user-here>:<insert-password-here>
+```
+
 # Testing
 
 `python manage.py test -v2`
