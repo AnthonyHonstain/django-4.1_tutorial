@@ -18,6 +18,10 @@ You will need to create a `.my_pgpass` file with the following:
 localhost:5432:<your-database-name>:<insert-user-here>:<insert-password-here>
 ```
 
+You will need to generate a secret - which is handle via an environment variable
+https://stackoverflow.com/a/64213581
+
+
 # Testing
 
 `python manage.py test -v2`
