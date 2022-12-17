@@ -18,8 +18,9 @@ You will need to create a `.my_pgpass` file with the following:
 localhost:5432:<your-database-name>:<insert-user-here>:<insert-password-here>
 ```
 
-You will need to generate a secret - which is handle via an environment variable
-https://stackoverflow.com/a/64213581
+You will need to generate a secret - which is handle via an environment variable.
+Reference: https://stackoverflow.com/a/64213581
+We use the python-decouple library.
 
 
 # Testing
