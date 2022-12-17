@@ -13,6 +13,9 @@ services:
       - POSTGRES_PASSWORD=postgres
     ports:
       - '5432:5432'
+    # Logging for every query - can comment out the entire line to disable
+    #     Reference: https://stackoverflow.com/a/58806511
+    command: ["postgres", "-c", "log_statement=all"]
 
 volumes:
   postgres_data:
