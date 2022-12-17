@@ -1,7 +1,9 @@
 # Overview
 This Django project is just an implementation of the Django tutorial https://docs.djangoproject.com/en/4.1/intro/
 
-**GOAL**: Reference my knowledge of Django, and experiment with Python 3.11 and Django 4.1.1
+**GOAL**: Improve my knowledge of Django, and experiment with Python 3.11 and Django 4.1.1
+
+**Additional Goal**: Experiment with async functionality in Django
 
 # Key Dependencies
 * Python 3.11
