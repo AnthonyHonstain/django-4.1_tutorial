@@ -24,11 +24,8 @@ async def detail(request, question_id):
         question = await Question.objects.filter(pub_date__lte=timezone.now()).aget(pk=question_id)
         choices = []
         async for choice in Choice.objects.select_related('question').filter(
-                question_id=question_id, question__pub_date__lte=timezone.now()
-        ).all():
-            await asyncio.sleep(1)
+                question_id=question_id, question__pub_date__lte=timezone.now()):
             choices.append(choice)
-        print('foo')
 
     except Question.DoesNotExist:
         raise Http404("Question does not exist")
